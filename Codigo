@@ -1,0 +1,48 @@
+menu = """
+===========================
+[🏦/d] Depositar
+[💸/s] Sacar
+[📜/e] Extrato
+[❌/q] Sair
+===========================
+=> """
+
+saldo = 0
+extrato = []
+limite = 500
+numero_saques = 0
+LIMITE_SAQUES = 3
+
+while True:
+    opcao = input(menu)
+    if opcao.lower() in ["d", "🏦"]:
+        print("=========Depósito=========")
+        deposito = float(input("Qual é o valor do depósito?\n=>"))
+        extrato.append(str(deposito))
+        saldo += deposito
+    elif opcao.lower() in ["s", "💸"]:
+        print("=========Saque=========")
+        saque = float(input("Qual é o valor que deseja sacar?\n=>"))
+        if saldo >= saque > 0:
+            if saque <= 500:
+                numero_saques += 1
+                if numero_saques > LIMITE_SAQUES:
+                    print("Uso diário atingido! Retorne amanhã.")
+                else:
+                    extrato.append(str(-saque))  # Adiciona valor negativo para representar saque
+                    saldo -= saque
+            else:
+                print("Saques de no máximo 500 reais! Use outro valor.")
+        else:
+            print("Valor de saque inválido ou saldo insuficiente.")
+    elif opcao.lower() in ["e", "📜"]:
+        print("=========Extrato=========")
+        if len(extrato) == 0:
+            print("Nenhuma operação realizada ainda.")
+        else:
+            print(extrato)
+        print(f"Saldo: R${saldo:.2f}")
+    elif opcao.lower() in ["q", "❌"]:
+        break
+    else:
+        print("Operação inválida! Por favor, selecione outra")
